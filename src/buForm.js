@@ -1,7 +1,7 @@
-const React = require('react');
-const { action, extendObservable } = require('mobx');
-const { observer } = require('mobx-react');
-const DatePicker = require('../extensions/datepicker.js');
+import React from 'react';
+import { observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+import DatePicker from '../extensions/datepicker.js';
 //import './extensions/bulma-calendar.css';
 
 //import debug from 'debug';
@@ -100,14 +100,12 @@ function deepFlattenArray(nestedArray) {
     */
 }
 
-const BuForm = observer(class _BuForm extends React.Component {
+@observer
+class BuForm extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        extendObservable(this, {
-            data: this.props.data
-        });
+    @observable data = this.props.data;
+    @action setPropValue(prop, value) {
+        this.data[prop] = value;
     }
 
     componentDidMount() {
@@ -129,22 +127,16 @@ const BuForm = observer(class _BuForm extends React.Component {
         }
     }
 
-    setPropValue(prop, value) {
-        return action(() => {
-            this.data[prop] = value;
-        });
-    }
-
     validator() {
         // -TBD: validate metadata
     }
 
-    BmText({ element }) {
+    BmText(element) {
         const { name, label, css, placeholder } = element;
-        return <div>
+        return [
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
-            </div>
+            </div>,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -153,12 +145,12 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>;
+        ];
     }
 
-    BmCheck({ element }) {
+    BmCheck(element) {
         const { name, label, css, text } = element;
-        return <div>
+        return [
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -173,13 +165,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>;
+        ];
     }
 
-    BmSelect({ element }) {
+    BmSelect(element) {
         const { name, label, css, options } = element;
 
-        return <div>
+        return [
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -194,13 +186,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>;
+        ];
     }
 
-    BmRadio({ element }) {
+    BmRadio(element) {
         const { name, label, css, options } = element;
 
-        return <div>
+        return [
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -219,13 +211,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>;
+        ];
     }
 
-    BmDatePicker({ element }) {
+    BmDatePicker(element) {
         const { name, label, css } = element;
 
-        return <div>
+        return [
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -238,13 +230,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>;
+        ];
     }
 
-    BmTextarea({ element }) {
+    BmTextarea(element) {
         const { name, label, css, placeholder } = element;
 
-        return <div>
+        return [
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -256,7 +248,7 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        </div>;
+        ];
     }
 
     genElem(elem) {
@@ -268,17 +260,17 @@ const BuForm = observer(class _BuForm extends React.Component {
         const elemWrapper = (element) => {
             switch (element.type) {
             case 'text':
-                return this.BmText({ element });
+                return this.BmText(element);
             case 'checkbox':
-                return this.BmCheck({ element });
+                return this.BmCheck(element);
             case 'select':
-                return this.BmSelect({ element });
+                return this.BmSelect(element);
             case 'radio':
-                return this.BmRadio({ element });
+                return this.BmRadio(element);
             case 'datepicker':
-                return this.BmDatePicker({ element });
+                return this.BmDatePicker(element);
             case 'textarea':
-                return this.BmTextarea({ element });
+                return this.BmTextarea(element);
             default:
                 break;
             }
@@ -317,6 +309,6 @@ const BuForm = observer(class _BuForm extends React.Component {
             </form>
         );
     }
-});
+}
 
 export default BuForm;
