@@ -1,7 +1,7 @@
 const React = require('react');
 const { action, extendObservable } = require('mobx');
 const { observer } = require('mobx-react');
-const DatePicker = require('./extensions/datepicker.js');
+const DatePicker = require('../extensions/datepicker.js');
 //import './extensions/bulma-calendar.css';
 
 //import debug from 'debug';

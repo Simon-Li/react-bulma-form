@@ -1,5 +1,5 @@
 import React from 'react';
-import BuForm from './buForm';
+import BuForm from './build/buForm';
 import renderer from 'react-test-renderer';
 
 // form metadata
