@@ -2,7 +2,7 @@ import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import DatePicker from './extensions/datepicker.js';
-import './extensions/bulma-calendar.css';
+//import './extensions/bulma-calendar.css';
 
 //import debug from 'debug';
 //const log = debug('form-gen');
@@ -89,9 +89,15 @@ import './extensions/bulma-calendar.css';
   * @returns {array} flattend array
   */
 function deepFlattenArray(nestedArray) {
+
+    return nestedArray.reduce((prev, curr) => prev.concat(curr), []);
+
+    /* remove jQuery dependency so should work for 2-dimension array.
+     *
     return $.map(nestedArray, function recurs(n) {
         return ($.isArray(n) ? $.map(n, recurs) : n);
     });
+    */
 }
 
 @observer
