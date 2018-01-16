@@ -110,9 +110,11 @@ const BuForm = observer(class _BuForm extends React.Component {
         });
     }
 
-    setPropValue = (prop, value) => action(() => {
-        this.data[prop] = value;
-    })
+    setPropValue(prop, value) {
+        return action(() => {
+            this.data[prop] = value;
+        });
+    }
 
     componentDidMount() {
         this.dpInstances = [];
