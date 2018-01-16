@@ -1,6 +1,6 @@
 {
   "name": "react-bulma-form",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A auto-gen react form with Bulma",
   "main": "build/buForm.js",
   "scripts": {
