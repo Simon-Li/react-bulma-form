@@ -110,12 +110,6 @@ const BuForm = observer(class _BuForm extends React.Component {
         });
     }
 
-    setPropValue(prop, value) {
-        return action(() => {
-            this.data[prop] = value;
-        });
-    }
-
     componentDidMount() {
         this.dpInstances = [];
 
@@ -135,11 +129,17 @@ const BuForm = observer(class _BuForm extends React.Component {
         }
     }
 
+    setPropValue(prop, value) {
+        return action(() => {
+            this.data[prop] = value;
+        });
+    }
+
     validator() {
         // -TBD: validate metadata
     }
 
-    BmText = ({ element }) => {
+    BmText({ element }) {
         const { name, label, css, placeholder } = element;
         return [
             <div key="1" className="field-label">
@@ -154,9 +154,9 @@ const BuForm = observer(class _BuForm extends React.Component {
                 </div>
             </div>
         ];
-    };
+    }
 
-    BmCheck = ({ element }) => {
+    BmCheck({ element }) {
         const { name, label, css, text } = element;
         return [
             <div key="1" className="field-label">
@@ -176,7 +176,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         ];
     }
 
-    BmSelect = ({ element }) => {
+    BmSelect({ element }) {
         const { name, label, css, options } = element;
 
         return [
@@ -197,7 +197,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         ];
     }
 
-    BmRadio = ({ element }) => {
+    BmRadio({ element }) {
         const { name, label, css, options } = element;
 
         return [
@@ -222,7 +222,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         ];
     }
 
-    BmDatePicker = ({ element }) => {
+    BmDatePicker({ element }) {
         const { name, label, css } = element;
 
         return [
@@ -241,7 +241,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         ];
     }
 
-    BmTextarea = ({ element }) => {
+    BmTextarea({ element }) {
         const { name, label, css, placeholder } = element;
 
         return [
