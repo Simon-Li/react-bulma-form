@@ -141,10 +141,10 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmText({ element }) {
         const { name, label, css, placeholder } = element;
-        return [
+        return <div>
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
-            </div>,
+            </div>
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -153,12 +153,12 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        ];
+        </div>;
     }
 
     BmCheck({ element }) {
         const { name, label, css, text } = element;
-        return [
+        return <div>
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -173,13 +173,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        ];
+        </div>;
     }
 
     BmSelect({ element }) {
         const { name, label, css, options } = element;
 
-        return [
+        return <div>
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -194,13 +194,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        ];
+        </div>;
     }
 
     BmRadio({ element }) {
         const { name, label, css, options } = element;
 
-        return [
+        return <div>
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -219,13 +219,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        ];
+        </div>;
     }
 
     BmDatePicker({ element }) {
         const { name, label, css } = element;
 
-        return [
+        return <div>
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -238,13 +238,13 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        ];
+        </div>;
     }
 
     BmTextarea({ element }) {
         const { name, label, css, placeholder } = element;
 
-        return [
+        return <div>
             <div key="1" className="field-label">
                 <label className="label">{ label }</label>
             </div>,
@@ -256,7 +256,7 @@ const BuForm = observer(class _BuForm extends React.Component {
                     </div>
                 </div>
             </div>
-        ];
+        </div>;
     }
 
     genElem(elem) {
