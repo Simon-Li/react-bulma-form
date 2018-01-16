@@ -4575,22 +4575,26 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _mobx = __webpack_require__(3);
+
+var _mobxReact = __webpack_require__(16);
+
+var _datepicker = __webpack_require__(28);
+
+var _datepicker2 = _interopRequireDefault(_datepicker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var React = __webpack_require__(1);
-
-var _require = __webpack_require__(3),
-    action = _require.action,
-    extendObservable = _require.extendObservable;
-
-var _require2 = __webpack_require__(16),
-    observer = _require2.observer;
-
-var DatePicker = __webpack_require__(28);
 //import './extensions/bulma-calendar.css';
 
 //import debug from 'debug';
@@ -4691,21 +4695,21 @@ function deepFlattenArray(nestedArray) {
     */
 }
 
-var BuForm = observer(function (_React$Component) {
-    _inherits(_BuForm, _React$Component);
+var BuForm = function (_React$Component) {
+    _inherits(BuForm, _React$Component);
 
-    function _BuForm(props) {
-        _classCallCheck(this, _BuForm);
+    function BuForm(props) {
+        _classCallCheck(this, BuForm);
 
-        var _this = _possibleConstructorReturn(this, (_BuForm.__proto__ || Object.getPrototypeOf(_BuForm)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (BuForm.__proto__ || Object.getPrototypeOf(BuForm)).call(this, props));
 
-        extendObservable(_this, {
+        (0, _mobx.extendObservable)(_this, {
             data: _this.props.data
         });
         return _this;
     }
 
-    _createClass(_BuForm, [{
+    _createClass(BuForm, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
@@ -4719,7 +4723,7 @@ var BuForm = observer(function (_React$Component) {
 
             datepickers.forEach(function (elem) {
                 var domNode = document.getElementsByName(elem.name)[0];
-                var dp = new DatePicker(domNode, {});
+                var dp = new _datepicker2.default(domNode, {});
                 _this2.dpInstances.push(dp);
             });
         }
@@ -4737,7 +4741,7 @@ var BuForm = observer(function (_React$Component) {
         value: function setPropValue(prop, value) {
             var _this3 = this;
 
-            return action(function () {
+            return (0, _mobx.action)(function () {
                 _this3.data[prop] = value;
             });
         }
@@ -4748,283 +4752,242 @@ var BuForm = observer(function (_React$Component) {
         }
     }, {
         key: 'BmText',
-        value: function BmText(_ref) {
+        value: function BmText(element) {
             var _this4 = this;
 
-            var element = _ref.element;
             var name = element.name,
                 label = element.label,
                 css = element.css,
                 placeholder = element.placeholder;
 
-            return React.createElement(
+            return [_react2.default.createElement(
                 'div',
-                null,
-                React.createElement(
+                { key: '1', className: 'field-label' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'label' },
+                    label
+                )
+            ), _react2.default.createElement(
+                'div',
+                { key: '2', className: 'field-body' },
+                _react2.default.createElement(
                     'div',
-                    { key: '1', className: 'field-label' },
-                    React.createElement(
-                        'label',
-                        { className: 'label' },
-                        label
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { key: '2', className: 'field-body' },
-                    React.createElement(
+                    { className: 'field' },
+                    _react2.default.createElement(
                         'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'div',
-                            { className: 'control' },
-                            React.createElement('input', { name: name, className: 'input ' + css, type: 'text', placeholder: placeholder,
-                                value: this.data[name], onChange: function onChange(ev) {
-                                    return _this4.setPropValue(name, ev.target.value);
-                                } })
-                        )
+                        { className: 'control' },
+                        _react2.default.createElement('input', { name: name, className: 'input ' + css, type: 'text', placeholder: placeholder,
+                            value: this.data[name], onChange: function onChange(ev) {
+                                return _this4.setPropValue(name, ev.target.value);
+                            } })
                     )
                 )
-            );
+            )];
         }
     }, {
         key: 'BmCheck',
-        value: function BmCheck(_ref2) {
+        value: function BmCheck(element) {
             var _this5 = this;
 
-            var element = _ref2.element;
             var name = element.name,
                 label = element.label,
                 css = element.css,
                 text = element.text;
 
-            return React.createElement(
+            return [_react2.default.createElement(
                 'div',
-                null,
-                React.createElement(
+                { key: '1', className: 'field-label' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'label' },
+                    label
+                )
+            ), _react2.default.createElement(
+                'div',
+                { key: '2', className: 'field-body' },
+                _react2.default.createElement(
                     'div',
-                    { key: '1', className: 'field-label' },
-                    React.createElement(
-                        'label',
-                        { className: 'label' },
-                        label
-                    )
-                ),
-                ',',
-                React.createElement(
-                    'div',
-                    { key: '2', className: 'field-body' },
-                    React.createElement(
+                    { className: 'field' },
+                    _react2.default.createElement(
                         'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'div',
-                            { className: 'control' },
-                            React.createElement(
-                                'label',
-                                { className: 'checkbox' },
-                                React.createElement('input', { name: name, className: css, type: 'checkbox',
-                                    value: this.data[name], onChange: function onChange(ev) {
-                                        return _this5.setPropValue(name, ev.target.checked);
-                                    } }),
-                                text
-                            )
+                        { className: 'control' },
+                        _react2.default.createElement(
+                            'label',
+                            { className: 'checkbox' },
+                            _react2.default.createElement('input', { name: name, className: css, type: 'checkbox',
+                                value: this.data[name], onChange: function onChange(ev) {
+                                    return _this5.setPropValue(name, ev.target.checked);
+                                } }),
+                            text
                         )
                     )
                 )
-            );
+            )];
         }
     }, {
         key: 'BmSelect',
-        value: function BmSelect(_ref3) {
+        value: function BmSelect(element) {
             var _this6 = this;
 
-            var element = _ref3.element;
             var name = element.name,
                 label = element.label,
                 css = element.css,
                 options = element.options;
 
 
-            return React.createElement(
+            return [_react2.default.createElement(
                 'div',
-                null,
-                React.createElement(
+                { key: '1', className: 'field-label' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'label' },
+                    label
+                )
+            ), _react2.default.createElement(
+                'div',
+                { key: '2', className: 'field-body' },
+                _react2.default.createElement(
                     'div',
-                    { key: '1', className: 'field-label' },
-                    React.createElement(
-                        'label',
-                        { className: 'label' },
-                        label
-                    )
-                ),
-                ',',
-                React.createElement(
-                    'div',
-                    { key: '2', className: 'field-body' },
-                    React.createElement(
+                    { className: 'field' },
+                    _react2.default.createElement(
                         'div',
-                        { className: 'field' },
-                        React.createElement(
+                        { className: 'control' },
+                        _react2.default.createElement(
                             'div',
-                            { className: 'control' },
-                            React.createElement(
-                                'div',
-                                { className: 'select is-fullwidth' },
-                                React.createElement(
-                                    'select',
-                                    { name: name, className: css, value: this.data[name], onChange: function onChange(ev) {
-                                            return _this6.setPropValue(name, ev.target.value);
-                                        } },
-                                    options.map(function (option, key) {
-                                        return React.createElement(
-                                            'option',
-                                            { key: key, value: option.value },
-                                            option.label
-                                        );
-                                    })
-                                )
+                            { className: 'select is-fullwidth' },
+                            _react2.default.createElement(
+                                'select',
+                                { name: name, className: css, value: this.data[name], onChange: function onChange(ev) {
+                                        return _this6.setPropValue(name, ev.target.value);
+                                    } },
+                                options.map(function (option, key) {
+                                    return _react2.default.createElement(
+                                        'option',
+                                        { key: key, value: option.value },
+                                        option.label
+                                    );
+                                })
                             )
                         )
                     )
                 )
-            );
+            )];
         }
     }, {
         key: 'BmRadio',
-        value: function BmRadio(_ref4) {
+        value: function BmRadio(element) {
             var _this7 = this;
 
-            var element = _ref4.element;
             var name = element.name,
                 label = element.label,
                 css = element.css,
                 options = element.options;
 
 
-            return React.createElement(
+            return [_react2.default.createElement(
                 'div',
-                null,
-                React.createElement(
+                { key: '1', className: 'field-label' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'label' },
+                    label
+                )
+            ), _react2.default.createElement(
+                'div',
+                { key: '2', className: 'field-body' },
+                _react2.default.createElement(
                     'div',
-                    { key: '1', className: 'field-label' },
-                    React.createElement(
-                        'label',
-                        { className: 'label' },
-                        label
-                    )
-                ),
-                ',',
-                React.createElement(
-                    'div',
-                    { key: '2', className: 'field-body' },
-                    React.createElement(
+                    { className: 'field' },
+                    _react2.default.createElement(
                         'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'div',
-                            { className: 'control' },
-                            options.map(function (option, key) {
-                                return React.createElement(
-                                    'label',
-                                    { key: key, className: 'radio' },
-                                    React.createElement('input', { name: name, className: css, type: 'radio',
-                                        value: _this7.data[option.name], onChange: function onChange(ev) {
-                                            return _this7.setPropValue(option.name, ev.target.checked);
-                                        } }),
-                                    option.label
-                                );
-                            })
-                        )
+                        { className: 'control' },
+                        options.map(function (option, key) {
+                            return _react2.default.createElement(
+                                'label',
+                                { key: key, className: 'radio' },
+                                _react2.default.createElement('input', { name: name, className: css, type: 'radio',
+                                    value: _this7.data[option.name], onChange: function onChange(ev) {
+                                        return _this7.setPropValue(option.name, ev.target.checked);
+                                    } }),
+                                option.label
+                            );
+                        })
                     )
                 )
-            );
+            )];
         }
     }, {
         key: 'BmDatePicker',
-        value: function BmDatePicker(_ref5) {
+        value: function BmDatePicker(element) {
             var _this8 = this;
 
-            var element = _ref5.element;
             var name = element.name,
                 label = element.label,
                 css = element.css;
 
 
-            return React.createElement(
+            return [_react2.default.createElement(
                 'div',
-                null,
-                React.createElement(
+                { key: '1', className: 'field-label' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'label' },
+                    label
+                )
+            ), _react2.default.createElement(
+                'div',
+                { key: '2', className: 'field-body' },
+                _react2.default.createElement(
                     'div',
-                    { key: '1', className: 'field-label' },
-                    React.createElement(
-                        'label',
-                        { className: 'label' },
-                        label
-                    )
-                ),
-                ',',
-                React.createElement(
-                    'div',
-                    { key: '2', className: 'field-body' },
-                    React.createElement(
+                    { className: 'field' },
+                    _react2.default.createElement(
                         'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'div',
-                            { className: 'control' },
-                            React.createElement('input', { name: name, className: 'input ' + css, type: 'text',
-                                value: this.data[name],
-                                onSelect: function onSelect(ev) {
-                                    return _this8.setPropValue(name, ev.target.value);
-                                } })
-                        )
+                        { className: 'control' },
+                        _react2.default.createElement('input', { name: name, className: 'input ' + css, type: 'text',
+                            value: this.data[name],
+                            onSelect: function onSelect(ev) {
+                                return _this8.setPropValue(name, ev.target.value);
+                            } })
                     )
                 )
-            );
+            )];
         }
     }, {
         key: 'BmTextarea',
-        value: function BmTextarea(_ref6) {
+        value: function BmTextarea(element) {
             var _this9 = this;
 
-            var element = _ref6.element;
             var name = element.name,
                 label = element.label,
                 css = element.css,
                 placeholder = element.placeholder;
 
 
-            return React.createElement(
+            return [_react2.default.createElement(
                 'div',
-                null,
-                React.createElement(
+                { key: '1', className: 'field-label' },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'label' },
+                    label
+                )
+            ), _react2.default.createElement(
+                'div',
+                { key: '2', className: 'field-body' },
+                _react2.default.createElement(
                     'div',
-                    { key: '1', className: 'field-label' },
-                    React.createElement(
-                        'label',
-                        { className: 'label' },
-                        label
-                    )
-                ),
-                ',',
-                React.createElement(
-                    'div',
-                    { key: '2', className: 'field-body' },
-                    React.createElement(
+                    { className: 'field' },
+                    _react2.default.createElement(
                         'div',
-                        { className: 'field' },
-                        React.createElement(
-                            'div',
-                            { className: 'control' },
-                            React.createElement('textarea', { name: name, className: 'textarea ' + css, type: 'text', placeholder: placeholder,
-                                value: this.data[name], onChange: function onChange(ev) {
-                                    return _this9.setPropValue(name, ev.target.value);
-                                } })
-                        )
+                        { className: 'control' },
+                        _react2.default.createElement('textarea', { name: name, className: 'textarea ' + css, type: 'text', placeholder: placeholder,
+                            value: this.data[name], onChange: function onChange(ev) {
+                                return _this9.setPropValue(name, ev.target.value);
+                            } })
                     )
                 )
-            );
+            )];
         }
     }, {
         key: 'genElem',
@@ -5039,17 +5002,17 @@ var BuForm = observer(function (_React$Component) {
             var elemWrapper = function elemWrapper(element) {
                 switch (element.type) {
                     case 'text':
-                        return _this10.BmText({ element: element });
+                        return _this10.BmText(element);
                     case 'checkbox':
-                        return _this10.BmCheck({ element: element });
+                        return _this10.BmCheck(element);
                     case 'select':
-                        return _this10.BmSelect({ element: element });
+                        return _this10.BmSelect(element);
                     case 'radio':
-                        return _this10.BmRadio({ element: element });
+                        return _this10.BmRadio(element);
                     case 'datepicker':
-                        return _this10.BmDatePicker({ element: element });
+                        return _this10.BmDatePicker(element);
                     case 'textarea':
-                        return _this10.BmTextarea({ element: element });
+                        return _this10.BmTextarea(element);
                     default:
                         break;
                 }
@@ -5057,7 +5020,7 @@ var BuForm = observer(function (_React$Component) {
             };
 
             var alignment = this.props.alignment === 'horizontal' ? 'is-horizontal' : null;
-            return React.createElement(
+            return _react2.default.createElement(
                 'div',
                 { className: 'field ' + alignment },
                 elemWrapper(elem)
@@ -5069,7 +5032,7 @@ var BuForm = observer(function (_React$Component) {
             var _this11 = this;
 
             return row.map(function (elem, key) {
-                return React.createElement(
+                return _react2.default.createElement(
                     'div',
                     { key: key, className: 'column' },
                     _this11.genElem(elem)
@@ -5082,7 +5045,7 @@ var BuForm = observer(function (_React$Component) {
             var _this12 = this;
 
             return metadata.map(function (row, key) {
-                return React.createElement(
+                return _react2.default.createElement(
                     'div',
                     { key: key, className: 'columns' },
                     _this12.genRow(row)
@@ -5096,7 +5059,7 @@ var BuForm = observer(function (_React$Component) {
                 name = _props.name,
                 metadata = _props.metadata;
 
-            return React.createElement(
+            return _react2.default.createElement(
                 'form',
                 { name: name },
                 this.genForm(metadata)
@@ -5104,8 +5067,8 @@ var BuForm = observer(function (_React$Component) {
         }
     }]);
 
-    return _BuForm;
-}(React.Component));
+    return BuForm;
+}(_react2.default.Component);
 
 exports.default = BuForm;
 

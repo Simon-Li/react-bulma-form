@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action } from 'mobx';
+import { action, extendObservable } from 'mobx';
 import { observer } from 'mobx-react';
 import DatePicker from '../extensions/datepicker.js';
 //import './extensions/bulma-calendar.css';
@@ -103,9 +103,12 @@ function deepFlattenArray(nestedArray) {
 @observer
 class BuForm extends React.Component {
 
-    @observable data = this.props.data;
-    @action setPropValue(prop, value) {
-        this.data[prop] = value;
+    constructor(props) {
+        super(props);
+
+        extendObservable(this, {
+            data: this.props.data
+        });
     }
 
     componentDidMount() {
@@ -125,6 +128,12 @@ class BuForm extends React.Component {
         if (this.dpInstances.length > 0) {
             this.dpInstances.forEach(dp => dp && dp.destroy());
         }
+    }
+
+    setPropValue(prop, value) {
+        return action(() => {
+            this.data[prop] = value;
+        });
     }
 
     validator() {
