@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, action } = require('mobx');
+const { action, extendObservable } = require('mobx');
 const { observer } = require('mobx-react');
 const DatePicker = require('./extensions/datepicker.js');
 //import './extensions/bulma-calendar.css';
@@ -100,16 +100,19 @@ function deepFlattenArray(nestedArray) {
     */
 }
 
-@observer
-class BuForm extends React.Component {
+const BuForm = observer(class _BuForm extends React.Component {
 
-    @observable data = this.props.data;
-    @action setData(data) {
-        this.data = data;
+    constructor(props) {
+        super(props);
+
+        extendObservable(this, {
+            data: this.props.data
+        });
     }
-    @action setPropValue(prop, value) {
+
+    setPropValue = (prop, value) => action(() => {
         this.data[prop] = value;
-    }
+    })
 
     componentDidMount() {
         this.dpInstances = [];
@@ -312,6 +315,6 @@ class BuForm extends React.Component {
             </form>
         );
     }
-}
+});
 
 export default BuForm;
