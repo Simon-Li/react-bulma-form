@@ -100,8 +100,7 @@ function deepFlattenArray(nestedArray) {
     */
 }
 
-@observer
-class BuForm extends React.Component {
+const BuForm = observer(class _BuForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -318,6 +317,6 @@ class BuForm extends React.Component {
             </form>
         );
     }
-}
+});
 
 export default BuForm;

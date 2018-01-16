@@ -4695,13 +4695,13 @@ function deepFlattenArray(nestedArray) {
     */
 }
 
-var BuForm = function (_React$Component) {
-    _inherits(BuForm, _React$Component);
+var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
+    _inherits(_BuForm, _React$Component);
 
-    function BuForm(props) {
-        _classCallCheck(this, BuForm);
+    function _BuForm(props) {
+        _classCallCheck(this, _BuForm);
 
-        var _this = _possibleConstructorReturn(this, (BuForm.__proto__ || Object.getPrototypeOf(BuForm)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (_BuForm.__proto__ || Object.getPrototypeOf(_BuForm)).call(this, props));
 
         (0, _mobx.extendObservable)(_this, {
             data: _this.props.data
@@ -4709,7 +4709,7 @@ var BuForm = function (_React$Component) {
         return _this;
     }
 
-    _createClass(BuForm, [{
+    _createClass(_BuForm, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
@@ -5067,8 +5067,8 @@ var BuForm = function (_React$Component) {
         }
     }]);
 
-    return BuForm;
-}(_react2.default.Component);
+    return _BuForm;
+}(_react2.default.Component));
 
 exports.default = BuForm;
 
