@@ -1,6 +1,5 @@
 import React from 'react';
-import BuForm from './build/buForm';
-//import DatePicker from './extensions/datepicker.js';
+import BuForm from '../../build/buForm';
 import renderer from 'react-test-renderer';
 
 // form metadata
