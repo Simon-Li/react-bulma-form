@@ -1,7 +1,7 @@
 import React from 'react';
 import { action, extendObservable } from 'mobx';
 import { observer } from 'mobx-react';
-import DatePicker from '../extensions/datepicker.js';
+import DatePicker from '/extensions/datepicker.js';
 
 const BuForm = observer(class _BuForm extends React.Component {
 

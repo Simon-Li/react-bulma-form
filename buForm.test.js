@@ -1,73 +1,73 @@
 import React from 'react';
 import BuForm from './build/buForm';
+//import DatePicker from './extensions/datepicker.js';
 import renderer from 'react-test-renderer';
 
 // form metadata
 const metadata = [
+    // 1st row with two text inputs
     [{
-        name: 'a1',
+        name: 'input1',
         type: 'text',
-        label: 'a1 label',
-        css: 'a1-css',
-        placeholder: 'a1 placeholder'
+        label: 'label',
+        placeholder: 'placeholder...'
     }, {
-        name: 'a2',
+        name: 'input2',
         type: 'text',
-        label: 'a2 label',
-        css: 'a2-css',
-        placeholder: 'a2 placeholder'
+        label: 'label',
+        placeholder: 'placeholder'
     }],
+    // 2nd row with checkbox and select
     [{
-        name: 'b1',
+        name: 'checkbox1',
         type: 'checkbox',
-        label: 'b1 label',
-        text: 'checkbox for ...',
-        css: 'b1-css'
+        label: 'label',
+        text: 'check for..',
     }, {
-        name: 'b2',
+        name: 'select1',
         type: 'select',
-        label: 'b2 label',
-        options: [{ label: 'aaa', value: 'aaa' }, { label: 'bbb', value: 'bbb' }, { label: 'ccc', value: 'ccc' }]
+        label: 'label',
+        options: [{ label: 'sel1', value: 'sel1' }, { label: 'sel2', value: 'sel2' }]
     }],
-/*
+    // 3rd row with datepicker
+    /*
     [{
-        name: 'c1',
+        name: 'datepicker1',
         type: 'datepicker',
-        label: 'c1 label',
-        css: 'c1-css'
+        label: 'label',
     }],
-*/
+    */
+    // 4th row with textarea
     [{
-        name: 'd1',
+        name: 'textarea1',
         type: 'textarea',
-        label: 'd1 label',
-        css: 'd1-css',
-        placeholder: 'd1 placeholder'
+        label: 'label',
+        placeholder: 'placeholder..'
     }],
+    // 5th row with two radios
     [{
-        name: 'e1',
+        name: 'radio1',
         type: 'radio',
-        label: 'e1 label',
-        css: 'e1-css',
-        options: [{ label: 'e1-1', name: 'e1-1' }, { label: 'e1-2', name: 'e1-2' }, { label: 'e1-3', name: 'e1-3' }]
+        label: 'label',
+        options: [{ label: 'radio-1', name: 'radio1' }, { label: 'radio-2', name: 'radio2' }]
     }, {
-        name: 'e2',
+        name: 'radio2',
         type: 'radio',
-        label: 'e2 label',
-        css: 'e2-css',
-        options: [{ label: 'e2-1', name: 'e2-1' }, { label: 'e2-2', name: 'e2-2' }, { label: 'e2-3', name: 'e2-3' }]
+        label: 'label',
+        options: [{ label: 'radio-3', name: 'radio3' }, { label: 'radio-4', name: 'radio4' }]
     }],
 ];
-// form data from server
+
+// form elements data (supposedly from server)
 const data = {
-    a1: 'hell world1',
-    a2: 'hell world2',
-    b1: true,
-    b2: 'bbb',
-    c1: '',
-    d1: 'hell world3',
-    'e1-1': true,
-    'e2-2': true
+    input1: 'input1 text',
+    input2: 'input2 text',
+    checkbox1: true,
+    select1: 'sel2',
+    datepicker1: '',
+    textarea1: 'textarea1 text',
+    radio1: true,
+    radio3: true
 };
 
 it('renders correctly', () => {
