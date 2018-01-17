@@ -1,7 +1,7 @@
 import React from 'react';
 import { action, extendObservable } from 'mobx';
 import { observer } from 'mobx-react';
-import DatePicker from '/extensions/datepicker.js';
+import DatePicker from '../extensions/datepicker.js';
 
 const BuForm = observer(class _BuForm extends React.Component {
 
@@ -19,7 +19,7 @@ const BuForm = observer(class _BuForm extends React.Component {
     componentDidMount() {
         this.dpInstances = [];
 
-        const flattened = this.props.metadata.reduce((prev, curr) => prev.concat(curr), []);
+        const flattened = this.props.fields.reduce((prev, curr) => prev.concat(curr), []);
         const datepickers = flattened.filter(elem => elem.type === 'datepicker');
 
         datepickers.forEach((elem) => {
@@ -39,12 +39,12 @@ const BuForm = observer(class _BuForm extends React.Component {
         const { name, label, css, placeholder } = element;
         return [
             <div key="1" className="field-label">
-                <label className="label">{ label }</label>
+                <label className="label">{label}</label>
             </div>,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
-                        <input name={name} className={`input ${css}`} type="text" placeholder={ placeholder }
+                        <input name={name} className={`input ${css}`} type="text" placeholder={placeholder}
                             value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)} />
                     </div>
                 </div>
@@ -53,19 +53,25 @@ const BuForm = observer(class _BuForm extends React.Component {
     }
 
     BmCheck(element) {
-        const { name, label, css, text } = element;
+        const { name, label, css, options } = element;
         return [
             <div key="1" className="field-label">
-                <label className="label">{ label }</label>
+                <label className="label">{label}</label>
             </div>,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
-                        <label className="checkbox">
-                            <input name={name} className={css} type="checkbox"
-                                value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.checked)} />
-                            {text}
-                        </label>
+                        {
+                            options.map((option, key) => (
+                                <label key={key} className="checkbox">
+                                    <input name={name} className={css} type="checkbox"
+                                        value={this.data[option.name]}
+                                        checked={this.data[option.name]}
+                                        onChange={ev => this.setPropValue(option.name, ev.target.checked)} />
+                                    {option.label}
+                                </label>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
@@ -77,15 +83,17 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return [
             <div key="1" className="field-label">
-                <label className="label">{ label }</label>
+                <label className="label">{label}</label>
             </div>,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
                         <div className="select is-fullwidth">
-                            <select name={name} className={css} value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)}>{
+                            <select name={name} className={css} value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)}>
+                            {
                                 options.map((option, key) => <option key={key} value={option.value}>{option.label}</option>)
-                            }</select>
+                            }
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -98,7 +106,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return [
             <div key="1" className="field-label">
-                <label className="label">{ label }</label>
+                <label className="label">{label}</label>
             </div>,
             <div key="2" className="field-body">
                 <div className="field">
@@ -107,7 +115,9 @@ const BuForm = observer(class _BuForm extends React.Component {
                             options.map((option, key) => (
                                 <label key={key} className="radio">
                                     <input name={name} className={css} type="radio"
-                                        value={this.data[option.name]} onChange={ev => this.setPropValue(option.name, ev.target.checked)} />
+                                        value={option.value}
+                                        checked={this.data[name] === option.value}
+                                        onChange={() => this.setPropValue(name, option.value)} />
                                     {option.label}
                                 </label>
                             ))
@@ -123,7 +133,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return [
             <div key="1" className="field-label">
-                <label className="label">{ label }</label>
+                <label className="label">{label}</label>
             </div>,
             <div key="2" className="field-body">
                 <div className="field">
@@ -142,12 +152,12 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return [
             <div key="1" className="field-label">
-                <label className="label">{ label }</label>
+                <label className="label">{label}</label>
             </div>,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
-                        <textarea name={name} className={`textarea ${css}`} type="text" placeholder={ placeholder }
+                        <textarea name={name} className={`textarea ${css}`} type="text" placeholder={placeholder}
                             value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)} />
                     </div>
                 </div>
@@ -184,7 +194,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         const alignment = this.props.alignment === 'horizontal' ? 'is-horizontal' : null;
         return (
             <div className={`field ${alignment}`}>
-                { elemWrapper(elem) }
+                {elemWrapper(elem)}
             </div>
         );
     }
@@ -192,24 +202,24 @@ const BuForm = observer(class _BuForm extends React.Component {
     genRow(row) {
         return row.map((elem, key) => (
             <div key={key} className="column">
-                { this.genElem(elem) }
+                {this.genElem(elem)}
             </div>
         ));
     }
 
-    genForm(metadata) {
-        return metadata.map((row, key) => (
+    genForm(fields) {
+        return fields.map((row, key) => (
             <div key={key} className="columns">
-                { this.genRow(row) }
+                {this.genRow(row)}
             </div>
         ));
     }
 
     render() {
-        const { name, metadata } = this.props;
+        const { name, fields } = this.props;
         return (
-            <form name={name}>
-                { this.genForm(metadata) }
+            <form name={name} onSubmit={this.props.onSubmit}>
+                {this.genForm(fields)}
             </form>
         );
     }

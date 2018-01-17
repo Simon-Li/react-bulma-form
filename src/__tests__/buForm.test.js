@@ -2,8 +2,8 @@ import React from 'react';
 import BuForm from '../../build/buForm';
 import renderer from 'react-test-renderer';
 
-// form metadata
-const metadata = [
+// form fields
+const fields = [
     // 1st row with two text inputs
     [{
         name: 'input1',
@@ -18,10 +18,10 @@ const metadata = [
     }],
     // 2nd row with checkbox and select
     [{
-        name: 'checkbox1',
+        name: 'checkbox',
         type: 'checkbox',
         label: 'label',
-        text: 'check for..',
+        options: [{ label: 'check-1', name: 'checkbox1' }, { label: 'check-2', name: 'checkbox2' }]
     }, {
         name: 'select1',
         type: 'select',
@@ -47,13 +47,13 @@ const metadata = [
     [{
         name: 'radio1',
         type: 'radio',
-        label: 'label',
-        options: [{ label: 'radio-1', name: 'radio1' }, { label: 'radio-2', name: 'radio2' }]
+        label: 'radio1',
+        options: [{ label: 'radio-11', value: 'radio11' }, { label: 'radio-12', value: 'radio12' }]
     }, {
         name: 'radio2',
         type: 'radio',
-        label: 'label',
-        options: [{ label: 'radio-3', name: 'radio3' }, { label: 'radio-4', name: 'radio4' }]
+        label: 'radio2',
+        options: [{ label: 'radio-21', value: 'radio21' }, { label: 'radio-22', value: 'radio22' }]
     }],
 ];
 
@@ -62,16 +62,17 @@ const data = {
     input1: 'input1 text',
     input2: 'input2 text',
     checkbox1: true,
+    checkbox2: true,
     select1: 'sel2',
     datepicker1: '',
     textarea1: 'textarea1 text',
-    radio1: true,
-    radio3: true
+    radio1: 'radio11',
+    radio2: 'radio21'
 };
 
 it('renders correctly', () => {
     const tree = renderer
-      .create(<BuForm name={'testForm'} metadata={metadata} data={data} alignment={'horizontal'} />)
+      .create(<BuForm name={'testForm'} fields={fields} data={data} alignment={'horizontal'} onSubmit={() => {}} />)
       .toJSON();
     expect(tree).toMatchSnapshot();
 });

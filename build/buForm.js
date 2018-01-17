@@ -4619,7 +4619,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
 
             this.dpInstances = [];
 
-            var flattened = this.props.metadata.reduce(function (prev, curr) {
+            var flattened = this.props.fields.reduce(function (prev, curr) {
                 return prev.concat(curr);
             }, []);
             var datepickers = flattened.filter(function (elem) {
@@ -4684,7 +4684,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
             var name = element.name,
                 label = element.label,
                 css = element.css,
-                text = element.text;
+                options = element.options;
 
             return [_react2.default.createElement(
                 'div',
@@ -4703,15 +4703,19 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'control' },
-                        _react2.default.createElement(
-                            'label',
-                            { className: 'checkbox' },
-                            _react2.default.createElement('input', { name: name, className: css, type: 'checkbox',
-                                value: this.data[name], onChange: function onChange(ev) {
-                                    return _this4.setPropValue(name, ev.target.checked);
-                                } }),
-                            text
-                        )
+                        options.map(function (option, key) {
+                            return _react2.default.createElement(
+                                'label',
+                                { key: key, className: 'checkbox' },
+                                _react2.default.createElement('input', { name: name, className: css, type: 'checkbox',
+                                    value: _this4.data[option.name],
+                                    checked: _this4.data[option.name],
+                                    onChange: function onChange(ev) {
+                                        return _this4.setPropValue(option.name, ev.target.checked);
+                                    } }),
+                                option.label
+                            );
+                        })
                     )
                 )
             )];
@@ -4798,8 +4802,10 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                                 'label',
                                 { key: key, className: 'radio' },
                                 _react2.default.createElement('input', { name: name, className: css, type: 'radio',
-                                    value: _this6.data[option.name], onChange: function onChange(ev) {
-                                        return _this6.setPropValue(option.name, ev.target.checked);
+                                    value: option.value,
+                                    checked: _this6.data[name] === option.value,
+                                    onChange: function onChange() {
+                                        return _this6.setPropValue(name, option.value);
                                     } }),
                                 option.label
                             );
@@ -4932,10 +4938,10 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
         }
     }, {
         key: 'genForm',
-        value: function genForm(metadata) {
+        value: function genForm(fields) {
             var _this11 = this;
 
-            return metadata.map(function (row, key) {
+            return fields.map(function (row, key) {
                 return _react2.default.createElement(
                     'div',
                     { key: key, className: 'columns' },
@@ -4948,12 +4954,12 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
         value: function render() {
             var _props = this.props,
                 name = _props.name,
-                metadata = _props.metadata;
+                fields = _props.fields;
 
             return _react2.default.createElement(
                 'form',
-                { name: name },
-                this.genForm(metadata)
+                { name: name, onSubmit: this.props.onSubmit },
+                this.genForm(fields)
             );
         }
     }]);
