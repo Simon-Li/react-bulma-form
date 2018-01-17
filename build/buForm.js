@@ -4595,106 +4595,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//import './extensions/bulma-calendar.css';
-
-//import debug from 'debug';
-//const log = debug('form-gen');
-
-/**
- * ~~Usage~~
- *
- * import FormGen from '<path-of-formGen.js>';
- *
- * <FormGen name={name} metadata={metadata} data={data} alignment={'horizontal'} />
- *
- * this.props.metadata definition
- *
-    // form data from server
-    //
-    metadata = [
-        [{
-            name: 'a1',
-            type: 'text',
-            label: 'a1 label',
-            css: 'a1-css',
-            placeholder: 'a1 placeholder'
-        }, {
-            name: 'a2',
-            type: 'text',
-            label: 'a2 label',
-            css: 'a2-css',
-            placeholder: 'a2 placeholder'
-        }],
-        [{
-            name: 'b1',
-            type: 'checkbox',
-            label: 'b1 label',
-            text: 'checkbox for ...'
-            css: 'b1-css'
-        }, {
-            name: 'b2',
-            type: 'select',
-            label: 'b2 label',
-            options: [{ label: 'aaa', value: 'aaa' }, { label: 'bbb', value: 'bbb' }, { label: 'ccc', value: 'ccc' }]
-        }],
-        [{
-            name: 'c1',
-            type: 'datepicker',
-            label: 'c1 label',
-            css: 'c1-css'
-        }],
-        [{
-            name: 'd1',
-            type: 'textarea',
-            label: 'd1 label',
-            css: 'd1-css',
-            placeholder: 'd1 placeholder'
-        }],
-        [{
-            name: 'e1',
-            type: 'radio',
-            label: 'e1 label',
-            css: 'e1-css',
-            options: ['e1-111', 'e1-222', 'e1-333']
-        }, {
-            name: 'e2',
-            type: 'radio',
-            label: 'e2 label',
-            css: 'e2-css',
-            options: ['e2-111', 'e2-222', 'e2-333']
-        }],
-    ];
-
-    // form data from server
-    //
-    const data = {
-        a1: 'hell world1',
-        a2: 'hell world2',
-        b1: true,
-        b2: 'bbb',
-        d1: 'hell world3'
-    };
- */
-
-/**
-  * deep flatten nested array
-  * @param {array} nestedArray Nested array
-  * @returns {array} flattend array
-  */
-function deepFlattenArray(nestedArray) {
-
-    return nestedArray.reduce(function (prev, curr) {
-        return prev.concat(curr);
-    }, []);
-
-    /* remove jQuery dependency so should work for 2-dimension array.
-     *
-    return $.map(nestedArray, function recurs(n) {
-        return ($.isArray(n) ? $.map(n, recurs) : n);
-    });
-    */
-}
-
 var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     _inherits(_BuForm, _React$Component);
 
@@ -4706,6 +4606,9 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
         (0, _mobx.extendObservable)(_this, {
             data: _this.props.data
         });
+        _this.setPropValue = (0, _mobx.action)(function (prop, value) {
+            _this.data[prop] = value;
+        });
         return _this;
     }
 
@@ -4716,7 +4619,9 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
 
             this.dpInstances = [];
 
-            var flattened = deepFlattenArray(this.props.metadata);
+            var flattened = this.props.metadata.reduce(function (prev, curr) {
+                return prev.concat(curr);
+            }, []);
             var datepickers = flattened.filter(function (elem) {
                 return elem.type === 'datepicker';
             });
@@ -4737,23 +4642,9 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
             }
         }
     }, {
-        key: 'setPropValue',
-        value: function setPropValue(prop, value) {
-            var _this3 = this;
-
-            return (0, _mobx.action)(function () {
-                _this3.data[prop] = value;
-            });
-        }
-    }, {
-        key: 'validator',
-        value: function validator() {
-            // -TBD: validate metadata
-        }
-    }, {
         key: 'BmText',
         value: function BmText(element) {
-            var _this4 = this;
+            var _this3 = this;
 
             var name = element.name,
                 label = element.label,
@@ -4779,7 +4670,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                         { className: 'control' },
                         _react2.default.createElement('input', { name: name, className: 'input ' + css, type: 'text', placeholder: placeholder,
                             value: this.data[name], onChange: function onChange(ev) {
-                                return _this4.setPropValue(name, ev.target.value);
+                                return _this3.setPropValue(name, ev.target.value);
                             } })
                     )
                 )
@@ -4788,7 +4679,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'BmCheck',
         value: function BmCheck(element) {
-            var _this5 = this;
+            var _this4 = this;
 
             var name = element.name,
                 label = element.label,
@@ -4817,7 +4708,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                             { className: 'checkbox' },
                             _react2.default.createElement('input', { name: name, className: css, type: 'checkbox',
                                 value: this.data[name], onChange: function onChange(ev) {
-                                    return _this5.setPropValue(name, ev.target.checked);
+                                    return _this4.setPropValue(name, ev.target.checked);
                                 } }),
                             text
                         )
@@ -4828,7 +4719,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'BmSelect',
         value: function BmSelect(element) {
-            var _this6 = this;
+            var _this5 = this;
 
             var name = element.name,
                 label = element.label,
@@ -4859,7 +4750,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                             _react2.default.createElement(
                                 'select',
                                 { name: name, className: css, value: this.data[name], onChange: function onChange(ev) {
-                                        return _this6.setPropValue(name, ev.target.value);
+                                        return _this5.setPropValue(name, ev.target.value);
                                     } },
                                 options.map(function (option, key) {
                                     return _react2.default.createElement(
@@ -4877,7 +4768,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'BmRadio',
         value: function BmRadio(element) {
-            var _this7 = this;
+            var _this6 = this;
 
             var name = element.name,
                 label = element.label,
@@ -4907,8 +4798,8 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                                 'label',
                                 { key: key, className: 'radio' },
                                 _react2.default.createElement('input', { name: name, className: css, type: 'radio',
-                                    value: _this7.data[option.name], onChange: function onChange(ev) {
-                                        return _this7.setPropValue(option.name, ev.target.checked);
+                                    value: _this6.data[option.name], onChange: function onChange(ev) {
+                                        return _this6.setPropValue(option.name, ev.target.checked);
                                     } }),
                                 option.label
                             );
@@ -4920,7 +4811,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'BmDatePicker',
         value: function BmDatePicker(element) {
-            var _this8 = this;
+            var _this7 = this;
 
             var name = element.name,
                 label = element.label,
@@ -4947,7 +4838,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                         _react2.default.createElement('input', { name: name, className: 'input ' + css, type: 'text',
                             value: this.data[name],
                             onSelect: function onSelect(ev) {
-                                return _this8.setPropValue(name, ev.target.value);
+                                return _this7.setPropValue(name, ev.target.value);
                             } })
                     )
                 )
@@ -4956,7 +4847,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'BmTextarea',
         value: function BmTextarea(element) {
-            var _this9 = this;
+            var _this8 = this;
 
             var name = element.name,
                 label = element.label,
@@ -4983,7 +4874,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                         { className: 'control' },
                         _react2.default.createElement('textarea', { name: name, className: 'textarea ' + css, type: 'text', placeholder: placeholder,
                             value: this.data[name], onChange: function onChange(ev) {
-                                return _this9.setPropValue(name, ev.target.value);
+                                return _this8.setPropValue(name, ev.target.value);
                             } })
                     )
                 )
@@ -4992,7 +4883,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'genElem',
         value: function genElem(elem) {
-            var _this10 = this;
+            var _this9 = this;
 
             /**
              * element wrapper
@@ -5002,17 +4893,17 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
             var elemWrapper = function elemWrapper(element) {
                 switch (element.type) {
                     case 'text':
-                        return _this10.BmText(element);
+                        return _this9.BmText(element);
                     case 'checkbox':
-                        return _this10.BmCheck(element);
+                        return _this9.BmCheck(element);
                     case 'select':
-                        return _this10.BmSelect(element);
+                        return _this9.BmSelect(element);
                     case 'radio':
-                        return _this10.BmRadio(element);
+                        return _this9.BmRadio(element);
                     case 'datepicker':
-                        return _this10.BmDatePicker(element);
+                        return _this9.BmDatePicker(element);
                     case 'textarea':
-                        return _this10.BmTextarea(element);
+                        return _this9.BmTextarea(element);
                     default:
                         break;
                 }
@@ -5029,26 +4920,26 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     }, {
         key: 'genRow',
         value: function genRow(row) {
-            var _this11 = this;
+            var _this10 = this;
 
             return row.map(function (elem, key) {
                 return _react2.default.createElement(
                     'div',
                     { key: key, className: 'column' },
-                    _this11.genElem(elem)
+                    _this10.genElem(elem)
                 );
             });
         }
     }, {
         key: 'genForm',
         value: function genForm(metadata) {
-            var _this12 = this;
+            var _this11 = this;
 
             return metadata.map(function (row, key) {
                 return _react2.default.createElement(
                     'div',
                     { key: key, className: 'columns' },
-                    _this12.genRow(row)
+                    _this11.genRow(row)
                 );
             });
         }
