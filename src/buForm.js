@@ -1,7 +1,7 @@
 import React from 'react';
-import { action, extendObservable } from 'mobx';
+import { action, extendObservable, autorun, toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import DatePicker from '../extensions/datepicker.js';
+import DatePicker from './datepicker.js';
 
 const BuForm = observer(class _BuForm extends React.Component {
 
@@ -24,9 +24,18 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         datepickers.forEach((elem) => {
             const domNode = document.getElementsByName(elem.name)[0];
-            const dp = new DatePicker(domNode, {});
+            const dp = new DatePicker(domNode, {
+                onSelect: val => this.setPropValue(elem.name, val),
+                dataFormat: 'yyyy/mm/dd',
+            });
             this.dpInstances.push(dp);
         });
+
+        if (this.props.debug) {
+            autorun(() => {
+                console.log('[Mobx] data store', toJS(this.data)); // eslint-disable-line no-console
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -89,11 +98,9 @@ const BuForm = observer(class _BuForm extends React.Component {
                 <div className="field">
                     <div className="control">
                         <div className="select is-fullwidth">
-                            <select name={name} className={css} value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)}>
-                            {
+                            <select name={name} className={css} value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)}>{
                                 options.map((option, key) => <option key={key} value={option.value}>{option.label}</option>)
-                            }
-                            </select>
+                            }</select>
                         </div>
                     </div>
                 </div>
@@ -138,9 +145,7 @@ const BuForm = observer(class _BuForm extends React.Component {
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
-                        <input name={name} className={`input ${css}`} type="text"
-                            value={this.data[name]}
-                            onSelect={ev => this.setPropValue(name, ev.target.value)} />
+                        <input name={name} className={`input ${css}`} type="text" />
                     </div>
                 </div>
             </div>
