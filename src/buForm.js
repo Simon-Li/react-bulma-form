@@ -1,16 +1,30 @@
 import React from 'react';
-import { action, extendObservable, autorun, toJS } from 'mobx';
+import { action, autorun, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import DatePicker from './datepicker.js';
+
+/**
+ * label component wrapper
+ * @param {string} label Label
+ * @param {string} size Size
+ * @returns {object} label node
+ */
+function Label({ label, size = 'is-normal', alignment }) {
+    if (alignment === 'is-horizontal') {
+        return <div>
+            <label className={`field-label label ${size}`}>{label}</label>
+        </div>;
+    }
+
+    return <label className={`label ${size}`}>{label}</label>;
+}
 
 const BuForm = observer(class _BuForm extends React.Component {
 
     constructor(props) {
         super(props);
 
-        extendObservable(this, {
-            data: this.props.data
-        });
+        this.data = this.props.data;
         this.setPropValue = action((prop, value) => {
             this.data[prop] = value;
         });
@@ -47,9 +61,7 @@ const BuForm = observer(class _BuForm extends React.Component {
     BmText(element) {
         const { name, label, css, placeholder } = element;
         return [
-            <div key="1" className="field-label">
-                <label className="label">{label}</label>
-            </div>,
+            <Label key="1" label={label} alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -64,9 +76,7 @@ const BuForm = observer(class _BuForm extends React.Component {
     BmCheck(element) {
         const { name, label, css, options } = element;
         return [
-            <div key="1" className="field-label">
-                <label className="label">{label}</label>
-            </div>,
+            <Label key="1" label={label} alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -91,9 +101,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         const { name, label, css, options } = element;
 
         return [
-            <div key="1" className="field-label">
-                <label className="label">{label}</label>
-            </div>,
+            <Label key="1" label={label} alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -112,9 +120,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         const { name, label, css, options } = element;
 
         return [
-            <div key="1" className="field-label">
-                <label className="label">{label}</label>
-            </div>,
+            <Label key="1" label={label} size="" alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -139,9 +145,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         const { name, label, css } = element;
 
         return [
-            <div key="1" className="field-label">
-                <label className="label">{label}</label>
-            </div>,
+            <Label key="1" label={label} alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -156,9 +160,7 @@ const BuForm = observer(class _BuForm extends React.Component {
         const { name, label, css, placeholder } = element;
 
         return [
-            <div key="1" className="field-label">
-                <label className="label">{label}</label>
-            </div>,
+            <Label key="1" label={label} alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
@@ -196,9 +198,8 @@ const BuForm = observer(class _BuForm extends React.Component {
             throw new Error('Unrecognized element type!');
         };
 
-        const alignment = this.props.alignment === 'horizontal' ? 'is-horizontal' : null;
         return (
-            <div className={`field ${alignment}`}>
+            <div className={`field ${this.props.alignment || ''}`}>
                 {elemWrapper(elem)}
             </div>
         );
@@ -214,7 +215,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     genForm(fields) {
         return fields.map((row, key) => (
-            <div key={key} className="columns">
+            <div key={key} className="columns is-2">
                 {this.genRow(row)}
             </div>
         ));

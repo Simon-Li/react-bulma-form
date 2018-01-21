@@ -4595,6 +4595,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/**
+ * label component wrapper
+ * @param {string} label Label
+ * @param {string} size Size
+ * @returns {object} label node
+ */
+function Label(_ref) {
+    var label = _ref.label,
+        _ref$size = _ref.size,
+        size = _ref$size === undefined ? 'is-normal' : _ref$size,
+        alignment = _ref.alignment;
+
+    if (alignment === 'is-horizontal') {
+        return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(
+                'label',
+                { className: 'field-label label ' + size },
+                label
+            )
+        );
+    }
+
+    return _react2.default.createElement(
+        'label',
+        { className: 'label ' + size },
+        label
+    );
+}
+
 var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
     _inherits(_BuForm, _React$Component);
 
@@ -4603,9 +4634,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (_BuForm.__proto__ || Object.getPrototypeOf(_BuForm)).call(this, props));
 
-        (0, _mobx.extendObservable)(_this, {
-            data: _this.props.data
-        });
+        _this.data = _this.props.data;
         _this.setPropValue = (0, _mobx.action)(function (prop, value) {
             _this.data[prop] = value;
         });
@@ -4662,15 +4691,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 css = element.css,
                 placeholder = element.placeholder;
 
-            return [_react2.default.createElement(
-                'div',
-                { key: '1', className: 'field-label' },
-                _react2.default.createElement(
-                    'label',
-                    { className: 'label' },
-                    label
-                )
-            ), _react2.default.createElement(
+            return [_react2.default.createElement(Label, { key: '1', label: label, alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
                 { key: '2', className: 'field-body' },
                 _react2.default.createElement(
@@ -4697,15 +4718,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 css = element.css,
                 options = element.options;
 
-            return [_react2.default.createElement(
-                'div',
-                { key: '1', className: 'field-label' },
-                _react2.default.createElement(
-                    'label',
-                    { className: 'label' },
-                    label
-                )
-            ), _react2.default.createElement(
+            return [_react2.default.createElement(Label, { key: '1', label: label, alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
                 { key: '2', className: 'field-body' },
                 _react2.default.createElement(
@@ -4742,15 +4755,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 options = element.options;
 
 
-            return [_react2.default.createElement(
-                'div',
-                { key: '1', className: 'field-label' },
-                _react2.default.createElement(
-                    'label',
-                    { className: 'label' },
-                    label
-                )
-            ), _react2.default.createElement(
+            return [_react2.default.createElement(Label, { key: '1', label: label, alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
                 { key: '2', className: 'field-body' },
                 _react2.default.createElement(
@@ -4791,15 +4796,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 options = element.options;
 
 
-            return [_react2.default.createElement(
-                'div',
-                { key: '1', className: 'field-label' },
-                _react2.default.createElement(
-                    'label',
-                    { className: 'label' },
-                    label
-                )
-            ), _react2.default.createElement(
+            return [_react2.default.createElement(Label, { key: '1', label: label, size: '', alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
                 { key: '2', className: 'field-body' },
                 _react2.default.createElement(
@@ -4833,15 +4830,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 css = element.css;
 
 
-            return [_react2.default.createElement(
-                'div',
-                { key: '1', className: 'field-label' },
-                _react2.default.createElement(
-                    'label',
-                    { className: 'label' },
-                    label
-                )
-            ), _react2.default.createElement(
+            return [_react2.default.createElement(Label, { key: '1', label: label, alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
                 { key: '2', className: 'field-body' },
                 _react2.default.createElement(
@@ -4866,15 +4855,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 placeholder = element.placeholder;
 
 
-            return [_react2.default.createElement(
-                'div',
-                { key: '1', className: 'field-label' },
-                _react2.default.createElement(
-                    'label',
-                    { className: 'label' },
-                    label
-                )
-            ), _react2.default.createElement(
+            return [_react2.default.createElement(Label, { key: '1', label: label, alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
                 { key: '2', className: 'field-body' },
                 _react2.default.createElement(
@@ -4921,10 +4902,9 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 throw new Error('Unrecognized element type!');
             };
 
-            var alignment = this.props.alignment === 'horizontal' ? 'is-horizontal' : null;
             return _react2.default.createElement(
                 'div',
-                { className: 'field ' + alignment },
+                { className: 'field ' + (this.props.alignment || '') },
                 elemWrapper(elem)
             );
         }
@@ -4949,7 +4929,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
             return fields.map(function (row, key) {
                 return _react2.default.createElement(
                     'div',
-                    { key: key, className: 'columns' },
+                    { key: key, className: 'columns is-2' },
                     _this10.genRow(row)
                 );
             });

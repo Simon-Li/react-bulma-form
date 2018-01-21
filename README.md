@@ -13,7 +13,20 @@ Usage example
 ```javascript
 import BuForm from 'react-bulma-form';
 
+@observer
 class YourComponent extends React.Component {
+
+    // Initialize Mobx data store for form elements data (supposedly from server)
+    @observable data = {
+        input1: 'input1 text',
+        input2: 'input2 text',
+        checkbox1: true,
+        select1: 'sel2',
+        datepicker1: '',
+        textarea1: 'textarea1 text',
+        radio1: true,
+        radio3: true
+    };
 
     render() {
         const metadata = [
@@ -68,21 +81,11 @@ class YourComponent extends React.Component {
             }],
         ];
 
-        // form elements data (supposedly from server)
-        const data = {
-            input1: 'input1 text',
-            input2: 'input2 text',
-            checkbox1: true,
-            select1: 'sel2',
-            datepicker1: '',
-            textarea1: 'textarea1 text',
-            radio1: true,
-            radio3: true
-        };
-
         return (
             ...
-            <BuForm name={'yourFormName'} metadata={metadata} data={data} alignment={'horizontal'} />
+            <BuForm name={'yourFormName'} metadata={metadata} data={this.data} alignment={'is-horizontal'} debug />
+
+            {/* A json format of `this.data` will be printed out to console if `debug` is set */}
             ...
         );
     }
