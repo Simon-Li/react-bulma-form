@@ -13,21 +13,17 @@ import './lib/bulma-calendar.css';
 const App = observer(class _App extends Component {
 
 	// form elements data (supposedly from server)
-	constructor() {
-		super();
-
-		this.data = observable({
-			input1: 'input1 text',
-			input2: 'input2 text',
-			checkbox1: true,
-			checkbox2: true,
-			select1: 'sel2',
-			datepicker1: '',
-			textarea1: 'textarea1 text',
-			radio1: 'radio11',
-			radio2: 'radio21'
-		});
-	}
+	data = observable({
+		input1: 'input1 text',
+		input2: 'input2 text',
+		checkbox1: true,
+		checkbox2: true,
+		select1: 'sel2',
+		datepicker1: '',
+		textarea1: 'textarea1 text',
+		radio1: 'radio11',
+		radio2: 'radio21'
+	});
 
 	render() {
 		return (
