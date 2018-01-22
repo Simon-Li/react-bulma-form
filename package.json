@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "webpack --watch",
-    "build": "webpack"
+    "build": "WEBPACK_ENV=build webpack",
+    "dev": "WEBPACK_ENV=dev webpack --progress --colors"
   },
   "repository": {
     "type": "git",
@@ -25,13 +26,10 @@
   },
   "homepage": "https://github.com/Simon-Li/react-bulma-form#readme",
   "dependencies": {
-    "bulma": "^0.6.2",
     "mobx": "^3.4.1",
     "mobx-react": "^4.3.5",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-test-renderer": "^16.2.0",
-    "webpack": "^3.10.0"
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -44,6 +42,8 @@
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "jest": "^22.1.1",
-    "regenerator-runtime": "^0.11.1"
+    "react-test-renderer": "^16.2.0",
+    "regenerator-runtime": "^0.11.1",
+    "webpack": "^3.10.0"
   }
 }
