@@ -47,6 +47,8 @@
     "webpack": "^3.10.0"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/demo"]
+    "testPathIgnorePatterns": [
+      "/demo"
+    ]
   }
 }
