@@ -340,6 +340,16 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                 label = element.label,
                 css = element.css;
 
+            var d = new Date(this.data[name]);
+            var mon = (d.getMonth() % 12 + 1).toString();
+            var day = d.getDate().toString();
+
+            var val = '';
+            if (!String.prototype.padStart) {
+                val = d.getFullYear() + '/' + mon + '/' + day;
+            } else {
+                val = d.getFullYear() + '/' + mon.padStart(2, '0') + '/' + day.padStart(2, '0');
+            }
 
             return [_react2.default.createElement(Label, { key: '1', label: label, alignment: this.props.alignment }), _react2.default.createElement(
                 'div',
@@ -350,7 +360,7 @@ var BuForm = (0, _mobxReact.observer)(function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'control' },
-                        _react2.default.createElement('input', { name: name, className: 'input ' + css, type: 'text' })
+                        _react2.default.createElement('input', { name: name, className: 'input ' + css, type: 'text', defaultValue: val })
                     )
                 )
             )];

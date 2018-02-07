@@ -143,13 +143,24 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmDatePicker(element) {
         const { name, label, css } = element;
+        const d = new Date(this.data[name]);
+        const mon = ((d.getMonth() % 12) + 1).toString();
+        const day = (d.getDate()).toString();
+
+        let val = '';
+        if (!String.prototype.padStart) {
+            val = `${d.getFullYear()}/${mon}/${day}`;
+        }
+        else {
+            val = `${d.getFullYear()}/${mon.padStart(2, '0')}/${day.padStart(2, '0')}`;
+        }
 
         return [
             <Label key="1" label={label} alignment={this.props.alignment} />,
             <div key="2" className="field-body">
                 <div className="field">
                     <div className="control">
-                        <input name={name} className={`input ${css}`} type="text" />
+                        <input name={name} className={`input ${css}`} type="text" defaultValue={val} />
                     </div>
                 </div>
             </div>

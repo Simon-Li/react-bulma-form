@@ -11,6 +11,10 @@ npm install --save react-bulma-form
 
 Usage example
 ```javascript
+import React from 'react;
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+
 import BuForm from 'react-bulma-form';
 
 @observer

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import BuForm from './lib/buForm.js';
@@ -19,7 +20,7 @@ const App = observer(class _App extends Component {
 		checkbox1: true,
 		checkbox2: true,
 		select1: 'sel2',
-		datepicker1: '',
+		datepicker1: moment(),
 		textarea1: 'textarea1 text',
 		radio1: 'radio11',
 		radio2: 'radio21'
