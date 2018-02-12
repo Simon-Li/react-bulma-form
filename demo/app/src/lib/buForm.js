@@ -3,18 +3,25 @@ import { action, autorun, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import DatePicker from './datepicker.js';
 
+const IS_HORIZONTAL = 'is-horizontal';
+const elemStyleFn = alignment => alignment === IS_HORIZONTAL ? { paddingTop: 6 } : { paddingTop: 0 };
+
 /**
  * label component wrapper
  * @param {string} label Label
  * @param {string} size Size
  * @returns {object} label node
  */
-function Label({ label, size = 'is-normal' }) {
-    return (
-        <div className={`field-label ${size}`}>
-            <label className="label">{label}</label>
-        </div>
-    );
+function Label({ label, size = 'is-normal', alignment = IS_HORIZONTAL }) {
+    if (alignment === IS_HORIZONTAL) {
+        return (
+            <div className={`field-label ${size}`}>
+                <label className="label">{label}</label>
+            </div>
+        );
+    }
+
+    return <label className="label" style={{ textAlign: 'left' }}>{label}</label>
 }
 
 const BuForm = observer(class _BuForm extends React.Component {
@@ -59,8 +66,8 @@ const BuForm = observer(class _BuForm extends React.Component {
     BmText(element) {
         const { name, label, css, placeholder } = element;
         return (
-            <div className={`field ${this.props.alignment}`}>
-                <Label label={label} />
+            <div className={`field ${this.props.alignment||''}`}>
+                <Label label={label} alignment={this.props.alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
@@ -75,12 +82,14 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmCheck(element) {
         const { name, label, css, options } = element;
+        const alignment = this.props.alignment;
+
         return (
-            <div className={`field ${this.props.alignment}`}>
-                <Label label={label} />
+            <div className={`field ${alignment}`}>
+                <Label label={label} alignment={alignment} />
                 <div className="field-body">
                     <div className="field">
-                        <div className="control">
+                        <div className="control" style={elemStyleFn(alignment)}>
                             {
                                 options.map((option, key) => (
                                     <label key={key} className="checkbox">
@@ -104,7 +113,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return (
             <div className={`field ${this.props.alignment}`}>
-                <Label label={label} />
+                <Label label={label} alignment={this.props.alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
@@ -122,13 +131,14 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmRadio(element) {
         const { name, label, css, options } = element;
+        const alignment = this.props.alignment;
 
         return (
-            <div className={`field ${this.props.alignment}`}>
-                <Label label={label} />
+            <div className={`field ${alignment}`}>
+                <Label label={label} alignment={alignment} />
                 <div className="field-body">
                     <div className="field">
-                        <div className="control">
+                        <div className="control" style={elemStyleFn(alignment)}>
                             {
                                 options.map((option, key) => (
                                     <label key={key} className="radio">
@@ -163,7 +173,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return (
             <div className={`field ${this.props.alignment}`}>
-                <Label label={label} />
+                <Label label={label} alignment={this.props.alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
@@ -180,7 +190,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
         return (
             <div className={`field ${this.props.alignment}`}>
-                <Label label={label} />
+                <Label label={label} alignment={this.props.alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
