@@ -9,14 +9,12 @@ import DatePicker from './datepicker.js';
  * @param {string} size Size
  * @returns {object} label node
  */
-function Label({ label, size = 'is-normal', alignment }) {
-    if (alignment === 'is-horizontal') {
-        return <div>
-            <label className={`field-label label ${size}`}>{label}</label>
-        </div>;
-    }
-
-    return <label className={`label ${size}`}>{label}</label>;
+function Label({ label, size = 'is-normal' }) {
+    return (
+        <div className={`field-label ${size}`}>
+            <label className="label">{label}</label>
+        </div>
+    );
 }
 
 const BuForm = observer(class _BuForm extends React.Component {
@@ -60,85 +58,93 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmText(element) {
         const { name, label, css, placeholder } = element;
-        return [
-            <Label key="1" label={label} alignment={this.props.alignment} />,
-            <div key="2" className="field-body">
-                <div className="field">
-                    <div className="control">
-                        <input name={name} className={`input ${css}`} type="text" placeholder={placeholder}
-                            value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)} />
+        return (
+            <div className={`field ${this.props.alignment}`}>
+                <Label label={label} />
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control">
+                            <input name={name} className={`input ${css}`} type="text" placeholder={placeholder}
+                                value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)} />
+                        </div>
                     </div>
                 </div>
             </div>
-        ];
+        );
     }
 
     BmCheck(element) {
         const { name, label, css, options } = element;
-        return [
-            <Label key="1" label={label} alignment={this.props.alignment} />,
-            <div key="2" className="field-body">
-                <div className="field">
-                    <div className="control">
-                        {
-                            options.map((option, key) => (
-                                <label key={key} className="checkbox">
-                                    <input name={name} className={css} type="checkbox"
-                                        value={this.data[option.name]}
-                                        checked={this.data[option.name]}
-                                        onChange={ev => this.setPropValue(option.name, ev.target.checked)} />
-                                    {option.label}
-                                </label>
-                            ))
-                        }
+        return (
+            <div className={`field ${this.props.alignment}`}>
+                <Label label={label} />
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control">
+                            {
+                                options.map((option, key) => (
+                                    <label key={key} className="checkbox">
+                                        <input name={name} className={css} type="checkbox"
+                                            value={this.data[option.name]}
+                                            checked={this.data[option.name]}
+                                            onChange={ev => this.setPropValue(option.name, ev.target.checked)} />
+                                        {option.label}
+                                    </label>
+                                ))
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        ];
+        );
     }
 
     BmSelect(element) {
         const { name, label, css, options } = element;
 
-        return [
-            <Label key="1" label={label} alignment={this.props.alignment} />,
-            <div key="2" className="field-body">
-                <div className="field">
-                    <div className="control">
-                        <div className="select is-fullwidth">
-                            <select name={name} className={css} value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)}>{
-                                options.map((option, key) => <option key={key} value={option.value}>{option.label}</option>)
-                            }</select>
+        return (
+            <div className={`field ${this.props.alignment}`}>
+                <Label label={label} />
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control">
+                            <div className="select is-fullwidth">
+                                <select name={name} className={css} value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)}>{
+                                    options.map((option, key) => <option key={key} value={option.value}>{option.label}</option>)
+                                }</select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        ];
+        );
     }
 
     BmRadio(element) {
         const { name, label, css, options } = element;
 
-        return [
-            <Label key="1" label={label} size="" alignment={this.props.alignment} />,
-            <div key="2" className="field-body">
-                <div className="field">
-                    <div className="control">
-                        {
-                            options.map((option, key) => (
-                                <label key={key} className="radio">
-                                    <input name={name} className={css} type="radio"
-                                        value={option.value}
-                                        checked={this.data[name] === option.value}
-                                        onChange={() => this.setPropValue(name, option.value)} />
-                                    {option.label}
-                                </label>
-                            ))
-                        }
+        return (
+            <div className={`field ${this.props.alignment}`}>
+                <Label label={label} />
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control">
+                            {
+                                options.map((option, key) => (
+                                    <label key={key} className="radio">
+                                        <input name={name} className={css} type="radio"
+                                            value={option.value}
+                                            checked={this.data[name] === option.value}
+                                            onChange={() => this.setPropValue(name, option.value)} />
+                                        {option.label}
+                                    </label>
+                                ))
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        ];
+        );
     }
 
     BmDatePicker(element) {
@@ -155,32 +161,36 @@ const BuForm = observer(class _BuForm extends React.Component {
             val = `${d.getFullYear()}/${mon.padStart(2, '0')}/${day.padStart(2, '0')}`;
         }
 
-        return [
-            <Label key="1" label={label} alignment={this.props.alignment} />,
-            <div key="2" className="field-body">
-                <div className="field">
-                    <div className="control">
-                        <input name={name} className={`input ${css}`} type="text" defaultValue={val} />
+        return (
+            <div className={`field ${this.props.alignment}`}>
+                <Label label={label} />
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control">
+                            <input name={name} className={`input ${css}`} type="text" defaultValue={val} />
+                        </div>
                     </div>
                 </div>
             </div>
-        ];
+        );
     }
 
     BmTextarea(element) {
         const { name, label, css, placeholder } = element;
 
-        return [
-            <Label key="1" label={label} alignment={this.props.alignment} />,
-            <div key="2" className="field-body">
-                <div className="field">
-                    <div className="control">
-                        <textarea name={name} className={`textarea ${css}`} type="text" placeholder={placeholder}
-                            value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)} />
+        return (
+            <div className={`field ${this.props.alignment}`}>
+                <Label label={label} />
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control">
+                            <textarea name={name} className={`textarea ${css}`} type="text" placeholder={placeholder}
+                                value={this.data[name]} onChange={ev => this.setPropValue(name, ev.target.value)} />
+                        </div>
                     </div>
                 </div>
             </div>
-        ];
+        );
     }
 
     genElem(elem) {
@@ -209,11 +219,7 @@ const BuForm = observer(class _BuForm extends React.Component {
             throw new Error('Unrecognized element type!');
         };
 
-        return (
-            <div className={`field ${this.props.alignment || ''}`}>
-                {elemWrapper(elem)}
-            </div>
-        );
+        return elemWrapper(elem);
     }
 
     genRow(row) {
