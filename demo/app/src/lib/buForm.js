@@ -4,7 +4,13 @@ import { observer } from 'mobx-react';
 import DatePicker from './datepicker.js';
 
 const IS_HORIZONTAL = 'is-horizontal';
-const elemStyleFn = alignment => alignment === IS_HORIZONTAL ? { paddingTop: 6 } : { paddingTop: 0 };
+
+/**
+ * element style func
+ * @param {string} alignment Alignment style
+ * @returns {object} style object
+ */
+const elemStyleFn = alignment => (alignment === IS_HORIZONTAL ? { paddingTop: 6 } : { paddingTop: 0 });
 
 /**
  * label component wrapper
@@ -21,7 +27,7 @@ function Label({ label, size = 'is-normal', alignment = IS_HORIZONTAL }) {
         );
     }
 
-    return <label className="label" style={{ textAlign: 'left' }}>{label}</label>
+    return <label className="label" style={{ textAlign: 'left' }}>{label}</label>;
 }
 
 const BuForm = observer(class _BuForm extends React.Component {
@@ -65,9 +71,11 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmText(element) {
         const { name, label, css, placeholder } = element;
+        const alignment = this.props.alignment || '';
+
         return (
-            <div className={`field ${this.props.alignment||''}`}>
-                <Label label={label} alignment={this.props.alignment} />
+            <div className={`field ${alignment}`}>
+                <Label label={label} alignment={alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
@@ -82,7 +90,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmCheck(element) {
         const { name, label, css, options } = element;
-        const alignment = this.props.alignment;
+        const alignment = this.props.alignment || '';
 
         return (
             <div className={`field ${alignment}`}>
@@ -110,10 +118,11 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmSelect(element) {
         const { name, label, css, options } = element;
+        const alignment = this.props.alignment || '';
 
         return (
-            <div className={`field ${this.props.alignment}`}>
-                <Label label={label} alignment={this.props.alignment} />
+            <div className={`field ${alignment}`}>
+                <Label label={label} alignment={alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
@@ -131,7 +140,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmRadio(element) {
         const { name, label, css, options } = element;
-        const alignment = this.props.alignment;
+        const alignment = this.props.alignment || '';
 
         return (
             <div className={`field ${alignment}`}>
@@ -159,6 +168,7 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmDatePicker(element) {
         const { name, label, css } = element;
+        const alignment = this.props.alignment || '';
         const d = new Date(this.data[name]);
         const mon = ((d.getMonth() % 12) + 1).toString();
         const day = (d.getDate()).toString();
@@ -172,8 +182,8 @@ const BuForm = observer(class _BuForm extends React.Component {
         }
 
         return (
-            <div className={`field ${this.props.alignment}`}>
-                <Label label={label} alignment={this.props.alignment} />
+            <div className={`field ${alignment}`}>
+                <Label label={label} alignment={alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
@@ -187,10 +197,11 @@ const BuForm = observer(class _BuForm extends React.Component {
 
     BmTextarea(element) {
         const { name, label, css, placeholder } = element;
+        const alignment = this.props.alignment || '';
 
         return (
-            <div className={`field ${this.props.alignment}`}>
-                <Label label={label} alignment={this.props.alignment} />
+            <div className={`field ${alignment}`}>
+                <Label label={label} alignment={alignment} />
                 <div className="field-body">
                     <div className="field">
                         <div className="control">
