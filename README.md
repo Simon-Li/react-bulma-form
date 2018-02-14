@@ -11,7 +11,7 @@ npm install --save react-bulma-form
 
 Usage example
 ```javascript
-import React from 'react;
+import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -87,7 +87,7 @@ class YourComponent extends React.Component {
 
         return (
             ...
-            <BuForm name={'yourFormName'} metadata={metadata} data={this.data} alignment={'is-horizontal'} debug />
+            <BuForm name="formName" metadata={metadata} data={this.data} alignment="is-horizontal" debug />
 
             {/* A json format of `this.data` will be printed out to console if `debug` is set */}
             ...
